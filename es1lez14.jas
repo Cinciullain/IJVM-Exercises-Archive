@@ -1,0 +1,55 @@
+.constant
+    OBJREF 0x40
+.end-constant
+
+.main
+    .var 
+        a
+        b
+        c
+    .end-var
+
+    //Inizializzo le variabili
+    BIPUSH 0xF 
+    ISTORE a
+    BIPUSH 0x5
+    ISTORE b
+    BIPUSH 0xA
+    ISTORE c
+
+    //Preparazione per la chiamata di sistema al metodo
+    LDC_W OBJREF 
+    ILOAD a
+    ILOAD b
+    ILOAD c
+    INVOKEVIRTUAL massimoDiTre
+    //Termina esecuzione
+    HALT 
+.end-main
+
+.method massimoDiTre(n1, n2, n3)
+    ILOAD n1
+    ILOAD n2
+    ISUB
+    IFLT maxB
+    ILOAD n1
+    ILOAD n3
+    ISUB
+    IFLT maxC
+    ILOAD n1
+    GOTO fine
+    
+    maxB:
+        ILOAD n2
+        ILOAD n3
+        ISUB
+        IFLT maxC
+        ILOAD n2
+        GOTO fine
+
+    maxC:
+        ILOAD n3
+
+    fine:
+        IRETURN
+.end-method

@@ -1,0 +1,90 @@
+.constant
+    OBJREF 0x40
+.end-constant
+
+.main
+    .var
+        val
+        index
+    .end-var
+
+    BIPUSH 0x00
+    ISTORE val
+
+    //Index di 8 bit
+    BIPUSH 0x08
+    ISTORE index
+
+    //Prendo il numero in input
+    getnum:
+        IN
+        DUP
+        BIPUSH 0x031
+
+        //Jump se leggo 1
+        IF_ICMPEQ uno
+        DUP
+        BIPUSH 0x030
+
+        //Jump se leggo 0
+        IF_ICMPEQ zero
+
+        //Numero non valido
+        POP
+        GOTO getnum
+
+    //Shift del valore in caso di 1
+    uno:
+        OUT
+        ILOAD val
+        DUP
+        IADD
+        BIPUSH 0x01
+        IADD
+        ISTORE val
+        GOTO ind
+
+    //Shift del valore in caso di 0
+    zero:
+        OUT
+        ILOAD val
+        DUP
+        IADD
+        ISTORE val
+        GOTO ind
+
+    //Index per il numero di numeri inseriti
+    ind:
+        IINC index -1
+        ILOAD index
+        IFEQ fine
+        GOTO getnum
+
+    
+    fine:
+        BIPUSH 0xa
+        OUT
+        LDC_W OBJREF
+        ILOAD val
+        INVOKEVIRTUAL print
+        HALT
+.end-main
+
+
+.method print(total)
+    .var
+        place
+        index
+    .end-var
+
+    print: 
+        BIPUSH 0x9
+        ISTORE index
+        BIPUSH 0x1
+        ISTORE place
+    
+    return: 
+        BIPUSH 0xa
+        OUT
+        IRETURN
+.end-method

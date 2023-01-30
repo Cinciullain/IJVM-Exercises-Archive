@@ -1,0 +1,104 @@
+.constant
+    OBJREF 0x40
+.end-constant
+
+.main
+    .var
+        number
+    .end-var
+
+    BIPUSH 0x5
+    ISTORE number
+    LDC_W OBJREF
+    ILOAD number
+    INVOKEVIRTUAL power1
+    HALT
+.end-main
+
+//Metodo 2 (versione 1)
+.method power1(n)
+    .var
+        index //contatore
+        res   //risultato
+        base  //base = 2
+    .end-var
+
+    BIPUSH 0x0
+    ISTORE index
+    BIPUSH 0x1
+    ISTORE res
+    BIPUSH 0x2
+    ISTORE base
+
+    L1:
+        ILOAD n
+        ILOAD index
+        IF_ICMPEQ end
+        LDC_W OBJREF
+        ILOAD base
+        ILOAD res
+        INVOKEVIRTUAL prod
+        ISTORE res
+        IINC index 0x01
+        GOTO L1
+    end:
+        ILOAD res
+        IRETURN
+.end-method
+
+//Metodo 1
+.method prod(x, y)
+    .var
+        index
+        res
+    .end-var
+
+    BIPUSH 0x0
+    ISTORE index
+    BIPUSH 0x0
+    ISTORE res
+
+    L1: 
+        ILOAD x
+        ILOAD index
+        ISUB 
+        IFEQ L2 
+        ILOAD res
+        ILOAD y
+        IADD
+        ISTORE res
+        IINC index 0x01
+        GOTO L1
+
+    L2:
+        ILOAD res
+        IRETURN
+.end-method
+
+//Metodo 3 (versione 2)
+.method power2(n)
+    .var
+        index
+        res
+        base
+    .end-var
+
+    BIPUSH 0x1
+    ISTORE index
+    BIPUSH 0x2
+    ISTORE res
+
+    L1:
+        ILOAD n
+        ILOAD index
+        IF_ICMPEQ end
+        ILOAD res
+        DUP
+        ISUM
+        ISTORE res
+        IINC index 0x01
+        GOTO L1
+    end:
+        ILOAD res
+        IRETURN
+.end-method

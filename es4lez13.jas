@@ -1,0 +1,48 @@
+//Esercizio 4 - Lezione 13
+
+//Inizio del programma
+.main
+    //Variabili locali
+    .var
+        a
+        b
+    .end-var
+
+    //Inizializzo le variabili
+    BIPUSH 0x2
+    ISTORE a
+    BIPUSH 0x13
+    ISTORE b
+
+    //Funzione
+    loop: 
+        ILOAD a
+        ILOAD b
+
+        //Se sono uguali, finisce
+        IF_ICMPEQ end
+        ILOAD a
+        ILOAD b
+        ISUB
+
+        //Se a - b < 0, fa il salto
+        IFLT else
+        ILOAD a
+        ILOAD b
+        ISUB
+        ISTORE a
+        GOTO loop
+
+        //Faccio b - a, siccome a - b è negativo
+        else: 
+        ILOAD b
+        ILOAD a
+        ISUB
+        ISTORE b
+        GOTO loop
+
+        //Fine
+        end: 
+            ILOAD a
+.end-main
+//Fine programma

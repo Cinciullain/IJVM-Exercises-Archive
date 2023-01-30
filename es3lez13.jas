@@ -1,0 +1,43 @@
+//Esercizio 3 - Lezione 13
+
+//Inizio del programma
+.main
+    //Variabili locali
+    .var
+        a
+        b
+        sum
+        index
+    .end-var
+
+    //Inizializzo le variabili
+    BIPUSH 0x2
+    ISTORE a
+    BIPUSH 0x13
+    ISTORE b
+    BIPUSH 0x0
+    ISTORE sum
+    BIPUSH 0x0
+    ISTORE index
+
+    //Parte della moltiplicazione
+    L1: 
+        ILOAD a
+        ILOAD index
+        ISUB
+        //Eseguo il jump se abbiamo 0, altrimenti continuo
+        IFEQ L2
+        ILOAD sum
+        ILOAD b
+        IADD
+        ISTORE sum
+        //Incremento index e torno all'inizio della funzione
+        IINC index 0x01 
+        GOTO L1
+
+    //Moltiplicazione finite
+    L2: 
+        ILOAD sum
+        NOP
+.end-main
+//Fine programma

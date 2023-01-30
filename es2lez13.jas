@@ -1,0 +1,36 @@
+//Esercizio 2 - Lezione 13
+
+//Inizio del programma
+.main
+    //Variabili locali
+    .var
+        a
+        b
+    .end-var
+
+    //Inizializzo num1 e num2
+    BIPUSH 0x41
+    ISTORE a
+    BIPUSH 0x5A
+    ISTORE b
+
+    //Ricarico i valori nello stack ed eseguo la sottrazione
+    ILOAD a
+    ILOAD b
+    ISUB
+
+    //Se a - b < 0, fa il salto a maxB, altrimenti continua
+    IFLT L1 
+    GOTO end
+
+    //Salvo b in a, e a in b
+    maxB: 
+        ILOAD a
+        ILOAD b 
+        ISTORE a
+        ISTORE b
+
+    end: 
+        NOP
+.end-main
+//Fine programma

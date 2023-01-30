@@ -1,0 +1,85 @@
+.constant
+    OBJREF 0x40
+.end-constant
+
+.main
+    .var
+        a
+    .end-var
+
+    BIPUSH 0x5
+    ISTORE a
+    LDC_W OBJREF
+    ILOAD a
+    INVOKEVIRTUAL fact
+    HALT
+.end-main
+
+.method fact(n)
+    .var
+        index
+        res
+    .end-var
+
+    ILOAD n
+    BIPUSH 0x0
+    IF_ICMPEQ zero
+    BIPUSH 0x1
+    ISTORE index
+    BIPUSH 0x1
+    ISTORE res
+
+    L1:
+        ILOAD n
+        ILOAD index
+        IF_ICMPEQ end
+        LDC_W OBJREF
+        ILOAD index
+        ILOAD res
+        INVOKEVIRTUAL prod
+        ISTORE res
+        IINC index 0x01
+        GOTO L1
+
+    zero:
+        BIPUSH 0x1
+        GOTO return
+
+    end:
+        LDC_W OBJREF
+        ILOAD index
+        ILOAD res
+        INVOKEVIRTUAL prod
+
+    return:
+        IRETURN
+.end-method
+
+//Metodo 1
+.method prod(x, y)
+    .var
+        index
+        res
+    .end-var
+
+    BIPUSH 0x0
+    ISTORE index
+    BIPUSH 0x0
+    ISTORE res
+
+    L1: 
+        ILOAD x
+        ILOAD index
+        ISUB 
+        IFEQ L2 
+        ILOAD res
+        ILOAD y
+        IADD
+        ISTORE res
+        IINC index 0x01
+        GOTO L1
+
+    L2:
+        ILOAD res
+        IRETURN
+.end-method

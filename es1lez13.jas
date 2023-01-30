@@ -1,0 +1,35 @@
+//Esercizio 1 - Lezione 13
+
+//Inizio del programma
+.main
+    //Variabili locali
+    .var
+        num1
+        num2
+    .end-var
+
+    //Inizializzo num1 e num2
+    BIPUSH 0x41
+    ISTORE num1
+    BIPUSH 0x5A
+    ISTORE num2
+
+    //Ricarico i valori nello stack ed eseguo la sottrazione
+    ILOAD num1
+    ILOAD num2
+    ISUB
+
+    //Se num1 - num2 < 0, fa il salto a L1, altrimenti continua
+    IFLT L1 
+    ILOAD num1
+    OUT 
+    GOTO L2
+
+    L1: 
+        ILOAD num2
+        OUT 
+
+    L2: 
+        NOP
+.end-main
+//Fine programma
